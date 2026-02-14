@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taranjyot — Full Stack & Web3 Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050508;--surface:#0d0d14;--surface2:#12121c;--border:rgba(255,255,255,0.06);--accent:#7dffc1;--accent2:#a78bfa;--accent3:#38bdf8;--text:#e8e8f0;--muted:#6b6b82;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;line-height:1.7;overflow-x:hidden;cursor:none;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:exclusion;}
+#cursor-trail{position:fixed;width:36px;height:36px;border:1px solid rgba(125,255,193,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:100;opacity:.6;}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(125,255,193,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(125,255,193,.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:20px 48px;backdrop-filter:blur(20px);background:rgba(5,5,8,.7);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--accent);text-decoration:none;letter-spacing:-.5px;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:2px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-cta{background:transparent!important;border:1px solid var(--accent);color:var(--accent)!important;padding:8px 20px;font-size:11px!important;letter-spacing:2px;transition:background .2s!important;}
+.nav-cta:hover{background:rgba(125,255,193,.1)!important;}
+#hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:120px 48px 60px;gap:40px;z-index:1;}
+.hero-orb{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(125,255,193,.07) 0%,transparent 70%);border-radius:50%;top:50%;left:30%;transform:translate(-50%,-50%);pointer-events:none;animation:pulse 8s ease-in-out infinite;}
+.hero-orb2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(167,139,250,.05) 0%,transparent 70%);border-radius:50%;bottom:10%;right:10%;pointer-events:none;animation:pulse 10s ease-in-out infinite reverse;}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}}
+.hero-left{position:relative;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;padding:6px 14px;border:1px solid rgba(125,255,193,.2);border-radius:2px;background:rgba(125,255,193,.04);animation:fadeUp .8s .1s both;}
+.hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(52px,7vw,88px);line-height:.92;letter-spacing:-3px;margin-bottom:16px;animation:fadeUp .8s .2s both;}
+.hero-name span{display:block;color:transparent;-webkit-text-stroke:1px rgba(125,255,193,.4);}
+.hero-italic{font-family:'Instrument Serif',serif;font-style:italic;font-size:clamp(48px,6.5vw,82px);color:var(--accent);-webkit-text-stroke:0!important;letter-spacing:-2px;}
+.hero-desc{color:var(--muted);font-size:13px;max-width:440px;line-height:1.8;margin-bottom:36px;animation:fadeUp .8s .3s both;}
+.hero-desc strong{color:var(--text);font-weight:700;}
+.hero-actions{display:flex;gap:16px;align-items:center;animation:fadeUp .8s .4s both;}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#050508;padding:14px 28px;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-decoration:none;transition:all .2s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.btn-primary:hover{background:#fff;transform:translateY(-2px);box-shadow:0 12px 40px rgba(125,255,193,.3);}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;text-decoration:none;letter-spacing:1px;border-bottom:1px solid transparent;padding-bottom:2px;transition:all .2s;}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent);}
+.hero-right{display:flex;flex-direction:column;gap:16px;animation:fadeUp .8s .4s both;}
+.stat-card{background:var(--surface);border:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;transition:border-color .3s,transform .3s;}
+.stat-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s;}
+.stat-card:hover{border-color:rgba(125,255,193,.2);transform:translateX(4px);}
+.stat-card:hover::before{transform:scaleY(1);}
+.stat-num{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent);letter-spacing:-2px;}
+.stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.stat-icon{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:10px;letter-spacing:3px;text-transform:uppercase;animation:fadeUp 1s 1s both;}
+.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--accent));animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{transform:scaleY(.5);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;background:var(--bg);position:relative;z-index:1;}
+.marquee-inner{display:flex;gap:0;white-space:nowrap;animation:marquee 18s linear infinite;}
+.marquee-item{display:inline-flex;align-items:center;gap:32px;padding:0 32px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.marquee-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0;}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+section{position:relative;z-index:1;padding:80px 48px;}
+.section-header{display:flex;align-items:baseline;gap:20px;margin-bottom:52px;}
+.section-num{font-size:11px;color:var(--accent);letter-spacing:3px;font-weight:700;}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,4vw,54px);font-weight:800;letter-spacing:-2px;line-height:1;}
+.section-line{flex:1;height:1px;background:var(--border);margin-left:auto;max-width:200px;}
+#explorer-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.explorer-window{background:#08080f;border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 0 1px rgba(125,255,193,.04);display:grid;grid-template-rows:auto 1fr;min-height:640px;}
+.explorer-titlebar{background:#06060c;border-bottom:1px solid rgba(255,255,255,.06);padding:13px 18px;display:flex;align-items:center;gap:14px;user-select:none;}
+.titlebar-dots{display:flex;gap:7px;}
+.titlebar-dot{width:12px;height:12px;border-radius:50%;}
+.titlebar-dot.red{background:#ff5f57;}.titlebar-dot.yellow{background:#febc2e;}.titlebar-dot.green{background:#28c840;}
+.titlebar-path{font-size:11px;color:var(--muted);letter-spacing:.5px;}
+.titlebar-path span{color:var(--text);}
+.explorer-body{display:grid;grid-template-columns:260px 1fr;overflow:hidden;}
+.explorer-sidebar{background:#07070d;border-right:1px solid rgba(255,255,255,.05);overflow-y:auto;overflow-x:hidden;padding:14px 0;}
+.sidebar-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:.55;padding:10px 16px 6px;}
+.sidebar-divider{height:1px;background:var(--border);margin:10px 14px;}
+.folder-row{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:background .15s;user-select:none;position:relative;}
+.folder-row:hover{background:rgba(255,255,255,.03);}
+.folder-row.active{background:rgba(125,255,193,.06);}
+.folder-row.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);}
+.folder-row-icon{font-size:13px;flex-shrink:0;width:18px;text-align:center;}
+.folder-row-name{font-size:12px;color:var(--muted);flex:1;}
+.folder-row.active .folder-row-name{color:var(--accent);}
+.folder-row-chevron{font-size:9px;color:var(--muted);transition:transform .2s;}
+.folder-row.folder-open .folder-row-chevron{transform:rotate(90deg);}
+.folder-children{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+.folder-children.open{max-height:600px;}
+.file-row{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 30px;cursor:pointer;transition:background .15s;user-select:none;position:relative;}
+.file-row:hover{background:rgba(255,255,255,.025);}
+.file-row.active{background:rgba(125,255,193,.04);}
+.file-row.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent2);}
+.file-row-icon{font-size:11px;flex-shrink:0;}
+.file-row-name{font-size:11px;color:var(--muted);}
+.file-row.active .file-row-name{color:var(--text);}
+.explorer-content{overflow-y:auto;position:relative;background:#0a0a12;}
+.panel{display:none;}
+.panel.active{display:block;animation:panelFade .22s ease both;}
+@keyframes panelFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.welcome-pane{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:580px;gap:14px;text-align:center;padding:40px;}
+.welcome-icon{font-size:52px;opacity:.25;margin-bottom:4px;}
+.welcome-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--muted);}
+.welcome-sub{font-size:11px;color:var(--muted);opacity:.5;letter-spacing:1px;}
+.skill-head{padding:32px 36px 24px;border-bottom:1px solid var(--border);}
+.skill-head-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.skill-head-icon{width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(125,255,193,.05);border:1px solid rgba(125,255,193,.15);}
+.skill-head-name{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;}
+.skill-head-desc{font-size:12px;color:var(--muted);line-height:1.9;margin-bottom:16px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.skill-tag{background:rgba(125,255,193,.05);border:1px solid rgba(125,255,193,.14);color:var(--accent);font-size:10px;padding:3px 11px;letter-spacing:1px;}
+.related-label{padding:14px 36px 10px;font-size:9px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.proj-row{display:flex;align-items:flex-start;gap:18px;padding:22px 36px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;}
+.proj-row:hover{background:rgba(125,255,193,.025);}
+.proj-row:hover .proj-row-arrow{color:var(--accent);transform:translate(3px,-3px);}
+.proj-row-num{font-size:10px;color:var(--muted);letter-spacing:2px;flex-shrink:0;padding-top:2px;}
+.proj-row-body{flex:1;}
+.proj-row-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:5px;}
+.proj-row-desc{font-size:11px;color:var(--muted);line-height:1.7;}
+.proj-row-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.proj-pill{font-size:9px;padding:3px 9px;letter-spacing:1px;border:1px solid var(--border);color:var(--muted);}
+.proj-row-arrow{font-size:15px;color:var(--muted);transition:all .2s;flex-shrink:0;margin-top:2px;}
+.projects-list-head{padding:20px 36px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.projects-list-head-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;}
+.projects-list-head-meta{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.pf-row{display:flex;align-items:center;gap:16px;padding:16px 36px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;position:relative;}
+.pf-row:hover{background:rgba(125,255,193,.025);}
+.pf-row:hover .pf-arrow{opacity:1;transform:translate(3px,-3px);}
+.pf-icon{font-size:20px;flex-shrink:0;}
+.pf-body{flex:1;}
+.pf-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:3px;}
+.pf-meta{font-size:10px;color:var(--muted);}
+.pf-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.pf-tag{font-size:9px;padding:2px 8px;border:1px solid var(--border);color:var(--muted);}
+.pf-arrow{font-size:13px;color:var(--accent);opacity:0;transition:all .2s;}
+.proj-live-link{display:inline-flex;align-items:center;gap:6px;font-size:10px;color:var(--accent3);border:1px solid rgba(56,189,248,.2);padding:3px 10px;text-decoration:none;letter-spacing:1px;transition:all .2s;margin-left:auto;flex-shrink:0;}
+.proj-live-link:hover{background:rgba(56,189,248,.08);}
+.proj-detail-wrap{padding:32px 36px;}
+.back-btn{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--muted);cursor:pointer;margin-bottom:26px;letter-spacing:1px;transition:color .2s;background:none;border:none;font-family:'Space Mono',monospace;}
+.back-btn:hover{color:var(--accent);}
+.proj-badge{display:inline-block;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);padding:4px 12px;border:1px solid rgba(125,255,193,.3);background:rgba(125,255,193,.04);margin-bottom:14px;}
+.proj-detail-title{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;letter-spacing:-1.5px;margin-bottom:12px;line-height:1.1;}
+.proj-detail-links{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;}
+.proj-live-btn{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#050508;background:var(--accent3);padding:8px 18px;text-decoration:none;letter-spacing:1px;font-family:'Space Mono',monospace;transition:opacity .2s;}
+.proj-live-btn:hover{opacity:.85;}
+.proj-gh-btn{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--text);border:1px solid var(--border);padding:8px 18px;text-decoration:none;letter-spacing:1px;font-family:'Space Mono',monospace;transition:border-color .2s;}
+.proj-gh-btn:hover{border-color:var(--accent);}
+.case-block{margin-bottom:18px;border-left:2px solid var(--border);background:rgba(255,255,255,.012);padding:18px 22px;}
+.case-block.problem{border-color:#ef4444;}.case-block.stack{border-color:var(--accent2);}.case-block.solution{border-color:var(--accent);}.case-block.outcome{border-color:var(--accent3);}
+.case-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:7px;}
+.case-block.problem .case-lbl{color:#ef4444;}.case-block.stack .case-lbl{color:var(--accent2);}.case-block.solution .case-lbl{color:var(--accent);}.case-block.outcome .case-lbl{color:var(--accent3);}
+.case-text{font-size:12px;color:var(--muted);line-height:1.9;}
+.case-text strong{color:var(--text);}
+.case-tech-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
+.case-tech{font-size:10px;padding:4px 11px;border:1px solid rgba(167,139,250,.2);color:var(--accent2);letter-spacing:1px;}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+#web3{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.web3-grid{display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:start;}
+.web3-left{position:sticky;top:100px;}
+.web3-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.05);color:var(--accent2);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;}
+.web3-title{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:20px;}
+.web3-title em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent2);}
+.web3-desc{color:var(--muted);font-size:12px;line-height:1.8;}
+.chain-cards{display:flex;flex-direction:column;gap:2px;background:var(--border);}
+.chain-card{background:var(--bg);padding:26px 30px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;transition:background .3s;}
+.chain-card:hover{background:rgba(167,139,250,.04);}
+.chain-logo{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.03);border:1px solid var(--border);}
+.chain-info h4{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:3px;}
+.chain-info p{color:var(--muted);font-size:11px;}
+.chain-status{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border:1px solid rgba(125,255,193,.3);color:var(--accent);background:rgba(125,255,193,.04);white-space:nowrap;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+.contact-left{background:var(--surface);padding:60px;}
+.contact-big{font-family:'Syne',sans-serif;font-size:clamp(40px,5vw,70px);font-weight:800;letter-spacing:-3px;line-height:.95;margin-bottom:28px;}
+.contact-big em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--accent);}
+.contact-text{color:var(--muted);font-size:12px;line-height:1.9;max-width:360px;margin-bottom:36px;}
+.contact-email{font-size:14px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;display:inline-block;transition:color .2s;}
+.contact-email:hover{color:var(--accent);}
+.contact-right{background:var(--bg);padding:60px;display:flex;flex-direction:column;gap:18px;}
+.contact-link{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border:1px solid var(--border);text-decoration:none;color:inherit;transition:all .3s;position:relative;overflow:hidden;}
+.contact-link::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(125,255,193,.04) 0%,transparent 60%);opacity:0;transition:opacity .3s;}
+.contact-link:hover::before{opacity:1;}
+.contact-link:hover{border-color:rgba(125,255,193,.2);transform:translateX(4px);}
+.contact-link-left{display:flex;align-items:center;gap:14px;}
+.contact-link-icon{font-size:20px;width:40px;}
+.contact-link-label{font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:2px;text-transform:uppercase;}
+.contact-link-value{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;}
+.contact-link-arrow{color:var(--muted);font-size:16px;transition:transform .3s;}
+.contact-link:hover .contact-link-arrow{color:var(--accent);transform:translate(4px,-4px);}
+footer{border-top:1px solid var(--border);padding:22px 48px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;background:var(--bg);}
+.footer-text{font-size:11px;color:var(--muted);letter-spacing:1px;}
+.footer-text span{color:var(--accent);}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+::selection{background:rgba(125,255,193,.2);color:var(--accent);}
+
+/* ======== ADMIN HINT ======== */
+#admin-hint{position:fixed;bottom:20px;right:24px;font-size:9px;color:rgba(255,255,255,.08);letter-spacing:2px;z-index:200;pointer-events:none;text-transform:uppercase;}
+
+/* ======== PASSWORD MODAL ======== */
+#pw-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);}
+#pw-modal.show{display:flex;}
+.pw-box{background:var(--surface);border:1px solid var(--border);padding:40px;width:360px;text-align:center;}
+.pw-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;color:var(--accent);}
+.pw-sub{font-size:11px;color:var(--muted);margin-bottom:24px;letter-spacing:1px;}
+.pw-input{width:100%;background:#0a0a12;border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:14px;padding:12px 16px;outline:none;letter-spacing:3px;text-align:center;transition:border-color .2s;}
+.pw-input:focus{border-color:var(--accent);}
+.pw-input.error{border-color:#ef4444;animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pw-btn{margin-top:14px;width:100%;background:var(--accent);color:#050508;border:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;padding:12px;cursor:pointer;transition:background .2s;}
+.pw-btn:hover{background:#fff;}
+.pw-cancel{margin-top:10px;font-size:10px;color:var(--muted);cursor:pointer;letter-spacing:1px;text-transform:uppercase;background:none;border:none;font-family:'Space Mono',monospace;width:100%;padding:6px;transition:color .2s;}
+.pw-cancel:hover{color:var(--text);}
+.pw-err{font-size:10px;color:#ef4444;margin-top:8px;letter-spacing:1px;}
+
+/* ======== ADMIN PANEL ======== */
+#admin-panel{position:fixed;inset:0;z-index:1500;display:none;flex-direction:column;background:rgba(3,3,6,.96);backdrop-filter:blur(16px);}
+#admin-panel.show{display:flex;}
+.adm-topbar{background:#07070f;border-bottom:1px solid rgba(125,255,193,.12);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.adm-topbar-left{display:flex;align-items:center;gap:16px;}
+.adm-logo{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--accent);letter-spacing:-0.5px;}
+.adm-badge{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);background:rgba(125,255,193,.08);border:1px solid rgba(125,255,193,.2);padding:3px 10px;}
+.adm-close{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;padding:7px 16px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.adm-close:hover{border-color:#ef4444;color:#ef4444;}
+.adm-body{display:grid;grid-template-columns:240px 1fr;flex:1;overflow:hidden;}
+.adm-sidebar{background:#060610;border-right:1px solid rgba(255,255,255,.05);padding:20px 0;overflow-y:auto;}
+.adm-nav-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);opacity:.5;padding:8px 18px 4px;}
+.adm-nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .2s;border-left:2px solid transparent;}
+.adm-nav-item:hover{background:rgba(255,255,255,.03);color:var(--text);}
+.adm-nav-item.active{background:rgba(125,255,193,.06);color:var(--accent);border-left-color:var(--accent);}
+.adm-nav-item-icon{font-size:14px;width:18px;text-align:center;}
+.adm-content{overflow-y:auto;padding:32px 40px;}
+.adm-section{display:none;}
+.adm-section.active{display:block;}
+.adm-section-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;margin-bottom:6px;}
+.adm-section-sub{font-size:11px;color:var(--muted);margin-bottom:28px;letter-spacing:.5px;}
+/* project list in admin */
+.adm-proj-list{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.adm-proj-card{background:#0a0a14;border:1px solid var(--border);padding:18px 20px;display:flex;align-items:flex-start;gap:16px;transition:border-color .2s;}
+.adm-proj-card:hover{border-color:rgba(255,255,255,.1);}
+.adm-proj-info{flex:1;}
+.adm-proj-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;}
+.adm-proj-skill{font-size:10px;color:var(--accent2);letter-spacing:1px;margin-bottom:4px;}
+.adm-proj-meta{font-size:10px;color:var(--muted);}
+.adm-proj-actions{display:flex;gap:8px;flex-shrink:0;}
+.adm-btn-edit{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;font-size:10px;padding:5px 12px;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+.adm-btn-edit:hover{border-color:var(--accent);color:var(--accent);}
+.adm-btn-del{background:none;border:1px solid rgba(239,68,68,.2);color:#ef4444;font-family:'Space Mono',monospace;font-size:10px;padding:5px 12px;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+.adm-btn-del:hover{background:rgba(239,68,68,.1);}
+.adm-add-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#050508;border:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;padding:12px 24px;cursor:pointer;letter-spacing:1px;transition:all .2s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.adm-add-btn:hover{background:#fff;}
+/* form */
+.adm-form{background:#0a0a14;border:1px solid var(--border);padding:28px;}
+.adm-form-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:20px;letter-spacing:-.5px;}
+.form-row{margin-bottom:18px;}
+.form-label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.form-input,.form-textarea,.form-select{width:100%;background:#06060c;border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:12px;padding:10px 14px;outline:none;transition:border-color .2s;resize:vertical;}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--accent);}
+.form-textarea{min-height:80px;}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236b6b82'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-actions{display:flex;gap:10px;margin-top:24px;}
+.form-save{background:var(--accent);color:#050508;border:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;padding:10px 24px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.form-save:hover{background:#fff;}
+.form-cancel-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;padding:10px 20px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.form-cancel-btn:hover{border-color:var(--text);color:var(--text);}
+.form-hint{font-size:10px;color:var(--muted);margin-top:4px;opacity:.7;}
+/* success toast */
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--accent);color:#050508;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;padding:10px 24px;letter-spacing:1px;z-index:5000;transition:transform .3s;}
+#toast.show{transform:translateX(-50%) translateY(0);}
+/* settings tab */
+.adm-setting-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--border);}
+.adm-setting-info{flex:1;}
+.adm-setting-label{font-size:13px;margin-bottom:3px;}
+.adm-setting-desc{font-size:10px;color:var(--muted);}
+.adm-setting-input{background:#06060c;border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:12px;padding:8px 14px;outline:none;width:220px;transition:border-color .2s;}
+.adm-setting-input:focus{border-color:var(--accent);}
+.adm-save-settings{margin-top:24px;background:var(--accent);color:#050508;border:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;padding:10px 24px;cursor:pointer;letter-spacing:1px;transition:all .2s;}
+.adm-save-settings:hover{background:#fff;}
+
+@media(max-width:900px){
+  nav{padding:16px 24px;}.nav-links{display:none;}
+  #hero{grid-template-columns:1fr;padding:100px 24px 60px;}.hero-right{display:none;}
+  section{padding:60px 20px;}
+  .explorer-body{grid-template-columns:1fr;}.explorer-sidebar{display:none;}
+  .web3-grid{grid-template-columns:1fr;}.web3-left{position:static;}
+  .contact-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:10px;text-align:center;}
+  body{cursor:auto;}#cursor,#cursor-trail{display:none;}
+  .adm-body{grid-template-columns:1fr;}.adm-sidebar{display:none;}
+  .adm-content{padding:20px;}
+  .form-row-2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<div id="admin-hint">ctrl+shift+a · admin</div>
+<div id="toast">✓ Saved</div>
+
+<!-- PASSWORD MODAL -->
+<div id="pw-modal">
+  <div class="pw-box">
+    <div class="pw-title">Admin Access</div>
+    <div class="pw-sub">Enter your password to continue</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••••••" autocomplete="off">
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" onclick="checkPassword()">Unlock →</button>
+    <button class="pw-cancel" onclick="closePasswordModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="adm-topbar">
+    <div class="adm-topbar-left">
+      <div class="adm-logo">T/ Admin</div>
+      <div class="adm-badge">⚙ Edit Mode</div>
+    </div>
+    <button class="adm-close" onclick="closeAdmin()">✕ Exit Admin</button>
+  </div>
+  <div class="adm-body">
+    <!-- Admin Sidebar Nav -->
+    <div class="adm-sidebar">
+      <div class="adm-nav-label">Manage</div>
+      <div class="adm-nav-item active" onclick="showAdmSection('projects')" id="adm-nav-projects">
+        <span class="adm-nav-item-icon">📁</span> Projects
+      </div>
+      <div class="adm-nav-item" onclick="showAdmSection('skills')" id="adm-nav-skills">
+        <span class="adm-nav-item-icon">⚡</span> Skills
+      </div>
+      <div class="adm-nav-label" style="margin-top:12px;">Config</div>
+      <div class="adm-nav-item" onclick="showAdmSection('settings')" id="adm-nav-settings">
+        <span class="adm-nav-item-icon">🔧</span> Settings
+      </div>
+    </div>
+    <!-- Admin Content -->
+    <div class="adm-content">
+
+      <!-- PROJECTS SECTION -->
+      <div class="adm-section active" id="adm-projects">
+        <div class="adm-section-title">Projects</div>
+        <div class="adm-section-sub">Add, edit, or remove projects. Changes appear instantly on your portfolio.</div>
+        <div class="adm-proj-list" id="adm-proj-list"></div>
+        <button class="adm-add-btn" onclick="openProjectForm()">+ Add New Project</button>
+        <!-- Project Form -->
+        <div class="adm-form" id="proj-form" style="display:none;margin-top:24px;">
+          <div class="adm-form-title" id="proj-form-title">New Project</div>
+          <input type="hidden" id="proj-edit-id">
+          <div class="form-row">
+            <label class="form-label">Project Name *</label>
+            <input class="form-input" id="proj-name" placeholder="e.g. Solana DEX Aggregator">
+          </div>
+          <div class="form-row-2">
+            <div class="form-row" style="margin-bottom:0">
+              <label class="form-label">Emoji / Icon *</label>
+              <input class="form-input" id="proj-icon" placeholder="e.g. ◎" maxlength="4">
+            </div>
+            <div class="form-row" style="margin-bottom:0">
+              <label class="form-label">Category Tag *</label>
+              <input class="form-input" id="proj-badge" placeholder="e.g. Web3 · Solana">
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:18px">
+            <label class="form-label">Related Skills (comma separated) *</label>
+            <input class="form-input" id="proj-skills" placeholder="e.g. react, solana, typescript">
+            <div class="form-hint">Skill IDs: react, typescript, nodejs, restapi, solana, rust, pytorch, tensorflow</div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Short Description (shown in skill panels) *</label>
+            <input class="form-input" id="proj-short-desc" placeholder="One-line description shown next to skill files">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Stack Tags (comma separated) *</label>
+            <input class="form-input" id="proj-stack-tags" placeholder="e.g. React, TypeScript, Solana, Anchor">
+          </div>
+          <div class="form-row">
+            <label class="form-label">🔴 The Problem</label>
+            <textarea class="form-textarea" id="proj-problem" placeholder="What problem did this solve?"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">🟢 My Solution</label>
+            <textarea class="form-textarea" id="proj-solution" placeholder="How did you solve it?"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">🔵 Outcome</label>
+            <textarea class="form-textarea" id="proj-outcome" placeholder="What was the result?"></textarea>
+          </div>
+          <div class="form-row-2">
+            <div class="form-row" style="margin-bottom:0">
+              <label class="form-label">🔗 Live URL (optional)</label>
+              <input class="form-input" id="proj-live-url" placeholder="https://yourproject.com">
+            </div>
+            <div class="form-row" style="margin-bottom:0">
+              <label class="form-label">GitHub URL (optional)</label>
+              <input class="form-input" id="proj-gh-url" placeholder="https://github.com/...">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="form-save" onclick="saveProject()">Save Project →</button>
+            <button class="form-cancel-btn" onclick="cancelProjectForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS SECTION -->
+      <div class="adm-section" id="adm-skills">
+        <div class="adm-section-title">Skills</div>
+        <div class="adm-section-sub">Edit your skill descriptions and tags. These appear in the file explorer sidebar.</div>
+        <div id="adm-skills-list"></div>
+      </div>
+
+      <!-- SETTINGS SECTION -->
+      <div class="adm-section" id="adm-settings">
+        <div class="adm-section-title">Settings</div>
+        <div class="adm-section-sub">Configure your portfolio and admin access.</div>
+        <div class="adm-setting-row">
+          <div class="adm-setting-info">
+            <div class="adm-setting-label">Admin Password</div>
+            <div class="adm-setting-desc">Change your admin panel password</div>
+          </div>
+          <input class="adm-setting-input" id="new-password" type="password" placeholder="New password">
+        </div>
+        <div class="adm-setting-row">
+          <div class="adm-setting-info">
+            <div class="adm-setting-label">Your Name</div>
+            <div class="adm-setting-desc">Displayed in the nav logo and footer</div>
+          </div>
+          <input class="adm-setting-input" id="setting-name" placeholder="Taranjyot">
+        </div>
+        <div class="adm-setting-row">
+          <div class="adm-setting-info">
+            <div class="adm-setting-label">Your Email</div>
+            <div class="adm-setting-desc">Shown in the contact section</div>
+          </div>
+          <input class="adm-setting-input" id="setting-email" placeholder="you@email.com">
+        </div>
+        <div class="adm-setting-row">
+          <div class="adm-setting-info">
+            <div class="adm-setting-label">GitHub URL</div>
+            <div class="adm-setting-desc">Your GitHub profile link</div>
+          </div>
+          <input class="adm-setting-input" id="setting-github" placeholder="https://github.com/...">
+        </div>
+        <button class="adm-save-settings" onclick="saveSettings()">Save Settings →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN PORTFOLIO ===== -->
+<nav>
+  <a href="#" class="nav-logo" id="nav-logo-text">T/</a>
+  <ul class="nav-links">
+    <li><a href="#explorer-section">Explorer</a></li>
+    <li><a href="#web3">Web3</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-orb"></div><div class="hero-orb2"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Available for Projects · India 🇮🇳</div>
+    <h1 class="hero-name">Taran<br><span class="hero-italic">jyot</span></h1>
+    <p class="hero-desc">20-year-old <strong>Full Stack Engineer</strong> crafting scalable web apps and decentralized systems. Currently deep in the <strong>Solana ecosystem</strong> — building the next layer of the internet.</p>
+    <div class="hero-actions">
+      <a href="#explorer-section" class="btn-primary">Explore Work →</a>
+      <a href="https://github.com/THEECECODER" target="_blank" id="hero-gh-link" class="btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card"><div><div class="stat-num">3+</div><div class="stat-label">Years of Building</div></div><div class="stat-icon">⚡</div></div>
+    <div class="stat-card"><div><div class="stat-num">Web3</div><div class="stat-label">Current Focus · Solana</div></div><div class="stat-icon">◎</div></div>
+    <div class="stat-card"><div><div class="stat-num">Full</div><div class="stat-label">Stack Developer</div></div><div class="stat-icon">⬡</div></div>
+  </div>
+  <div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="marquee-wrap"><div class="marquee-inner">
+  <span class="marquee-item">React <span class="marquee-dot"></span> TypeScript <span class="marquee-dot"></span> Node.js <span class="marquee-dot"></span> Solana <span class="marquee-dot"></span> REST API <span class="marquee-dot"></span> Deep Learning <span class="marquee-dot"></span> Web3 <span class="marquee-dot"></span> Full Stack <span class="marquee-dot"></span></span>
+  <span class="marquee-item">React <span class="marquee-dot"></span> TypeScript <span class="marquee-dot"></span> Node.js <span class="marquee-dot"></span> Solana <span class="marquee-dot"></span> REST API <span class="marquee-dot"></span> Deep Learning <span class="marquee-dot"></span> Web3 <span class="marquee-dot"></span> Full Stack <span class="marquee-dot"></span></span>
+  <span class="marquee-item">React <span class="marquee-dot"></span> TypeScript <span class="marquee-dot"></span> Node.js <span class="marquee-dot"></span> Solana <span class="marquee-dot"></span> REST API <span class="marquee-dot"></span> Deep Learning <span class="marquee-dot"></span> Web3 <span class="marquee-dot"></span> Full Stack <span class="marquee-dot"></span></span>
+</div></div>
+
+<section id="explorer-section" class="reveal">
+  <div class="section-header">
+    <span class="section-num">01 — 02</span>
+    <h2 class="section-title">Skills & Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="explorer-window">
+    <div class="explorer-titlebar">
+      <div class="titlebar-dots"><div class="titlebar-dot red"></div><div class="titlebar-dot yellow"></div><div class="titlebar-dot green"></div></div>
+      <div class="titlebar-path">~/taranjyot/ <span id="path-display">select a file to explore</span></div>
+    </div>
+    <div class="explorer-body">
+      <div class="explorer-sidebar" id="explorer-sidebar">
+        <div class="sidebar-label">Skills</div>
+        <div class="folder-row" id="folder-frontend" onclick="toggleFolder('frontend')"><span class="folder-row-icon" id="ficon-frontend">📁</span><span class="folder-row-name">frontend</span><span class="folder-row-chevron">›</span></div>
+        <div class="folder-children" id="children-frontend">
+          <div class="file-row" id="file-react" onclick="openSkill('react')"><span class="file-row-icon">⚛</span><span class="file-row-name">react.skill</span></div>
+          <div class="file-row" id="file-typescript" onclick="openSkill('typescript')"><span class="file-row-icon">📘</span><span class="file-row-name">typescript.skill</span></div>
+        </div>
+        <div class="folder-row" id="folder-backend" onclick="toggleFolder('backend')"><span class="folder-row-icon" id="ficon-backend">📁</span><span class="folder-row-name">backend</span><span class="folder-row-chevron">›</span></div>
+        <div class="folder-children" id="children-backend">
+          <div class="file-row" id="file-nodejs" onclick="openSkill('nodejs')"><span class="file-row-icon">⬡</span><span class="file-row-name">nodejs.skill</span></div>
+          <div class="file-row" id="file-restapi" onclick="openSkill('restapi')"><span class="file-row-icon">🔗</span><span class="file-row-name">rest-api.skill</span></div>
+        </div>
+        <div class="folder-row" id="folder-web3s" onclick="toggleFolder('web3s')"><span class="folder-row-icon" id="ficon-web3s">📁</span><span class="folder-row-name">web3_solana</span><span class="folder-row-chevron">›</span></div>
+        <div class="folder-children" id="children-web3s">
+          <div class="file-row" id="file-solana" onclick="openSkill('solana')"><span class="file-row-icon">◎</span><span class="file-row-name">solana.skill</span></div>
+          <div class="file-row" id="file-rust" onclick="openSkill('rust')"><span class="file-row-icon">🦀</span><span class="file-row-name">rust.skill</span></div>
+        </div>
+        <div class="folder-row" id="folder-ai" onclick="toggleFolder('ai')"><span class="folder-row-icon" id="ficon-ai">📁</span><span class="folder-row-name">deep_learning</span><span class="folder-row-chevron">›</span></div>
+        <div class="folder-children" id="children-ai">
+          <div class="file-row" id="file-pytorch" onclick="openSkill('pytorch')"><span class="file-row-icon">🔥</span><span class="file-row-name">pytorch.skill</span></div>
+          <div class="file-row" id="file-tensorflow" onclick="openSkill('tensorflow')"><span class="file-row-icon">🧠</span><span class="file-row-name">tensorflow.skill</span></div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-label">Projects</div>
+        <div class="folder-row" id="folder-projects" onclick="toggleFolder('projects')"><span class="folder-row-icon" id="ficon-projects">📁</span><span class="folder-row-name">projects</span><span class="folder-row-chevron">›</span></div>
+        <div class="folder-children" id="children-projects" id="proj-sidebar-files"></div>
+      </div>
+      <div class="explorer-content" id="explorer-content">
+        <div class="panel active" id="pane-welcome">
+          <div class="welcome-pane"><div class="welcome-icon">🗂</div><div class="welcome-title">taranjyot's workspace</div><div class="welcome-sub">← click any folder or file to explore</div></div>
+        </div>
+        <!-- Skill panes rendered by JS -->
+        <div id="skill-panes-container"></div>
+        <!-- Projects list pane -->
+        <div class="panel" id="pane-projects-folder">
+          <div class="projects-list-head"><div class="projects-list-head-title">projects/</div><div class="projects-list-head-meta" id="proj-count-label">0 files</div></div>
+          <div id="pane-projects-list-rows"></div>
+        </div>
+        <!-- Project detail panes rendered by JS -->
+        <div id="proj-panes-container"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="web3">
+  <div class="section-header"><span class="section-num">03</span><h2 class="section-title">Web3 Focus</h2><div class="section-line"></div></div>
+  <div class="web3-grid">
+    <div class="web3-left reveal"><div class="web3-badge">⬡ On-Chain Builder</div><h3 class="web3-title">Building the<br><em>decentralized</em><br>future.</h3><p class="web3-desc">Currently focused on Solana — the fastest proof-of-stake blockchain. Exploring DeFi primitives, token programs, and dApp architecture.</p></div>
+    <div class="chain-cards reveal">
+      <div class="chain-card"><div class="chain-logo">◎</div><div class="chain-info"><h4>Solana</h4><p>Smart contracts · SPL Tokens · DeFi · NFTs</p></div><span class="chain-status">Active</span></div>
+      <div class="chain-card"><div class="chain-logo">⟠</div><div class="chain-info"><h4>Anchor Framework</h4><p>Program development · IDL · Client SDKs</p></div><span class="chain-status">Active</span></div>
+      <div class="chain-card"><div class="chain-logo">🦀</div><div class="chain-info"><h4>Rust</h4><p>On-chain programs · Memory safety · Performance</p></div><span class="chain-status">Learning</span></div>
+      <div class="chain-card"><div class="chain-logo">⚡</div><div class="chain-info"><h4>DeFi Protocols</h4><p>Liquidity pools · Yield farming · Swaps</p></div><span class="chain-status">Exploring</span></div>
+      <div class="chain-card"><div class="chain-logo">🖼</div><div class="chain-info"><h4>NFT & Metaplex</h4><p>Collections · Candy machine · Royalties</p></div><span class="chain-status">Active</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="padding:0;background:var(--bg);">
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <h2 class="contact-big">Let's<br><em>build</em><br>together.</h2>
+      <p class="contact-text">Open to freelance, collaborations, and full-time opportunities. Building something in Web3 or Full-Stack? I want to hear about it.</p>
+      <a href="#" class="contact-email" id="contact-email-link">taranjyotsvig@gmail.com</a>
+    </div>
+    <div class="contact-right reveal">
+      <a href="#" class="contact-link" id="contact-email-card"><div class="contact-link-left"><div class="contact-link-icon">✉</div><div><div class="contact-link-label">Email</div><div class="contact-link-value" id="contact-email-val">taranjyotsvig@gmail.com</div></div></div><span class="contact-link-arrow">↗</span></a>
+      <a href="https://github.com/THEECECODER" target="_blank" class="contact-link" id="contact-gh-link"><div class="contact-link-left"><div class="contact-link-icon">⌥</div><div><div class="contact-link-label">GitHub</div><div class="contact-link-value">THEECECODER</div></div></div><span class="contact-link-arrow">↗</span></a>
+      <a href="#" class="contact-link"><div class="contact-link-left"><div class="contact-link-icon">◈</div><div><div class="contact-link-label">Location</div><div class="contact-link-value">India 🇮🇳</div></div></div><span class="contact-link-arrow">↗</span></a>
+      <a href="#" class="contact-link"><div class="contact-link-left"><div class="contact-link-icon">◎</div><div><div class="contact-link-label">Solana</div><div class="contact-link-value">On-Chain Builder</div></div></div><span class="contact-link-arrow">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">© 2026 <span id="footer-name">Taranjyot</span> — Designed & Coded by hand.</span>
+  <span class="footer-text">Built with <span>♥</span> from India</span>
+</footer>
+
+<script>
+// ============================================================
+//  DATA — Default state (loaded from localStorage if present)
+// ============================================================
+const STORAGE_KEY = 'portfolio_data_v1';
+const DEFAULT_PW = 'taran2026'; // Change this in Settings after deploy!
+
+const SKILL_DEFS = {
+  react:      { icon:'⚛', name:'React',      folder:'frontend', desc:'Component-driven UI with hooks, context, and state management. Strong experience building SPAs, dashboards, and Web3 dApp frontends.', tags:['React 18','Hooks','Context API','React Router','Zustand','SWR'] },
+  typescript: { icon:'📘', name:'TypeScript', folder:'frontend', desc:'Strong typing across the full stack — from frontend components to API contracts. Used in strict mode across all projects.', tags:['Strict Mode','Generics','Utility Types','Type Guards','Zod'] },
+  nodejs:     { icon:'⬡', name:'Node.js',    folder:'backend',  desc:'Server-side JavaScript for scalable REST APIs and real-time systems. Comfortable with async patterns, middleware, auth, and deployments.', tags:['Express.js','JWT Auth','Middleware','WebSockets','Cron Jobs'] },
+  restapi:    { icon:'🔗', name:'REST API',   folder:'backend',  desc:'Designing clean, documented, production-grade REST APIs with versioning, error handling, validation, and OpenAPI docs.', tags:['REST','OpenAPI','Postman','Rate Limiting','Pagination'] },
+  solana:     { icon:'◎', name:'Solana',      folder:'web3s',    desc:'Building on the fastest Layer-1. Experience with on-chain programs (Anchor), SPL tokens, DeFi, and full dApp architectures.', tags:['Anchor','Web3.js','SPL Tokens','Wallet Adapter','Metaplex','PDAs'] },
+  rust:       { icon:'🦀', name:'Rust',       folder:'web3s',    desc:'Systems language for Solana on-chain programs. Leveraging memory safety and ownership to write secure, high-performance blockchain programs.', tags:['Ownership','Lifetimes','Anchor Macros','CPI Calls','PDA Derivation'] },
+  pytorch:    { icon:'🔥', name:'PyTorch',    folder:'ai',       desc:'Deep learning framework for building CNNs, training pipelines, ONNX export, and deploying models as API services.', tags:['CNN','Transfer Learning','DataLoaders','ONNX Export','Training Loops'] },
+  tensorflow: { icon:'🧠', name:'TensorFlow', folder:'ai',       desc:'Experience with TF/Keras for prototyping and benchmarking models alongside PyTorch workflows.', tags:['Keras','Model Training','TF Datasets','SavedModel','TFLite'] },
+};
+
+const DEFAULT_PROJECTS = [
+  { id:'defi', icon:'◎', name:'Solana DeFi Dashboard', badge:'Web3 · Solana · Full Stack', skills:['solana','react','typescript'], shortDesc:'Real-time wallet & DeFi tracker with on-chain state via hooks.', stackTags:['Solana Web3.js','React 18','TypeScript','Node.js','Anchor','Wallet Adapter'], problem:'DeFi users on Solana had no single dashboard to track wallet balances, SPL tokens, and DeFi positions in real time. Existing tools were fragmented and slow.', solution:'Built a real-time dashboard connecting any Solana wallet — fetches native SOL, all SPL token accounts, DeFi positions, and recent transaction history. UI updates via WebSocket subscriptions. Node.js backend caches token metadata.', outcome:'Sub-second wallet data load. Full TypeScript safety. Shareable wallet URL pattern. End-to-end Web3 product ownership proven.', liveUrl:'', ghUrl:'' },
+  { id:'aiclassifier', icon:'🧠', name:'AI Image Classifier API', badge:'Deep Learning · REST API', skills:['pytorch','tensorflow','nodejs','restapi'], shortDesc:'Custom CNN served via REST API with 94% accuracy.', stackTags:['PyTorch','Python','ONNX','Node.js','Express.js','Docker','Redis'], problem:'Developers wanting image classification had no simple REST endpoint to call. Training models and building inference infrastructure is a major barrier.', solution:'Designed and trained a custom CNN in PyTorch. Exported to ONNX for fast inference, wrapped in a Node.js REST API with API key auth, Redis caching, rate limiting, and Swagger docs. Containerized with Docker.', outcome:'94% accuracy on the benchmark. Under 120ms inference with ONNX. Clean REST API — send a POST with an image, get structured JSON back.', liveUrl:'', ghUrl:'' },
+  { id:'ecommerce', icon:'🛒', name:'Full-Stack E-Commerce', badge:'Full Stack · Production', skills:['react','typescript','nodejs','restapi'], shortDesc:'Production e-commerce platform with Stripe payments and admin dashboard.', stackTags:['React 18','TypeScript','Node.js','Express','PostgreSQL','Redis','Stripe API'], problem:'Small businesses needed an affordable, self-hostable store. Existing solutions were too expensive or too rigid with poor developer APIs.', solution:'Built the entire platform solo — React + TypeScript frontend (catalog, cart, checkout), Node/Express REST API, PostgreSQL, Redis caching, and Stripe payments with webhook handling.', outcome:'End-to-end typed codebase. Stripe payments fully functional. Live inventory management in admin panel. Proved full-stack solo ownership.', liveUrl:'', ghUrl:'' },
+  { id:'nft', icon:'🖼', name:'NFT Minting Protocol', badge:'On-Chain · Rust · Solana', skills:['rust','solana'], shortDesc:'On-chain Rust program for batch minting with royalty enforcement.', stackTags:['Rust','Anchor','Solana','Metaplex','React','Wallet Adapter'], problem:'NFT creators on Solana faced high complexity — candy machines, royalty enforcement, batch minting at scale — with limited, error-prone tooling.', solution:'Wrote a custom on-chain Rust program using Anchor handling collection init, batch minting via CPI to Metaplex, royalty enforcement, and collection verification. React dApp wraps it with a minting UI.', outcome:'Fully deployed on Solana Devnet. Gas-optimized. Proved ability to write production Rust on-chain — ownership, CPI calls, PDA derivation.', liveUrl:'', ghUrl:'' },
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let data = loadData();
+let openFolders = new Set();
+let currentPane = 'welcome';
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return {
+    password: DEFAULT_PW,
+    name: 'Taranjyot',
+    email: 'taranjyotsvig@gmail.com',
+    github: 'https://github.com/THEECECODER',
+    projects: JSON.parse(JSON.stringify(DEFAULT_PROJECTS)),
+    skills: {}
+  };
+}
+
+function saveData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ============================================================
+//  BOOT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  applySettings();
+  buildSkillPanes();
+  buildProjectPanes();
+  buildSidebarProjectFiles();
+  buildProjectsListPane();
+  initAdminProjectsList();
+  initAdminSkillsList();
+
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const trail  = document.getElementById('cursor-trail');
+  let mx=0,my=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+  });
+  setInterval(()=>{ trail.style.left=mx+'px'; trail.style.top=my+'px'; },60);
+
+  // Scroll reveal
+  document.querySelectorAll('.reveal').forEach(el => {
+    new IntersectionObserver(([e])=>{ if(e.isIntersecting) el.classList.add('visible'); },{threshold:.1}).observe(el);
+  });
+
+  // Keyboard shortcut
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); openPasswordModal(); }
+    if (e.key === 'Escape') { closePasswordModal(); closeAdmin(); }
+    if (document.getElementById('pw-modal').classList.contains('show') && e.key === 'Enter') checkPassword();
+  });
+});
+
+function applySettings() {
+  document.getElementById('footer-name').textContent = data.name;
+  const email = data.email;
+  const gh = data.github;
+  document.getElementById('contact-email-link').href = 'mailto:' + email;
+  document.getElementById('contact-email-link').textContent = email;
+  document.getElementById('contact-email-val').textContent = email;
+  document.getElementById('contact-email-card').href = 'mailto:' + email;
+  document.getElementById('contact-gh-link').href = gh;
+  document.getElementById('hero-gh-link').href = gh;
+}
+
+// ============================================================
+//  RENDER SKILL PANES
+// ============================================================
+function buildSkillPanes() {
+  const container = document.getElementById('skill-panes-container');
+  container.innerHTML = '';
+  const skillData = data.skills;
+
+  Object.entries(SKILL_DEFS).forEach(([id, def]) => {
+    const overrides = skillData[id] || {};
+    const desc = overrides.desc || def.desc;
+    const tags = overrides.tags || def.tags;
+
+    // Related projects for this skill
+    const related = data.projects.filter(p => p.skills && p.skills.includes(id));
+
+    const pane = document.createElement('div');
+    pane.className = 'panel';
+    pane.id = 'pane-skill-' + id;
+    pane.innerHTML = `
+      <div class="skill-head">
+        <div class="skill-head-row"><div class="skill-head-icon">${def.icon}</div><div class="skill-head-name">${def.name}</div></div>
+        <div class="skill-head-desc">${desc}</div>
+        <div class="skill-tags">${tags.map(t=>`<span class="skill-tag">${t}</span>`).join('')}</div>
+      </div>
+      ${related.length ? `<div class="related-label">Related Projects — click to open</div>
+        ${related.map((p,i)=>`
+        <div class="proj-row" onclick="openProject('${p.id}')">
+          <span class="proj-row-num">00${i+1}</span>
+          <div class="proj-row-body">
+            <div class="proj-row-title">${p.name}</div>
+            <div class="proj-row-desc">${p.shortDesc || ''}</div>
+            <div class="proj-row-pills">${(p.stackTags||[]).slice(0,4).map(t=>`<span class="proj-pill">${t}</span>`).join('')}</div>
+          </div>
+          <span class="proj-row-arrow">↗</span>
+        </div>`).join('')}` : `<div style="padding:28px 36px;font-size:12px;color:var(--muted);">No projects linked to this skill yet. Add projects via admin panel.</div>`}
+    `;
+    container.appendChild(pane);
+  });
+}
+
+// ============================================================
+//  RENDER PROJECT PANES
+// ============================================================
+function buildProjectPanes() {
+  const container = document.getElementById('proj-panes-container');
+  container.innerHTML = '';
+  data.projects.forEach(p => {
+    const pane = document.createElement('div');
+    pane.className = 'panel';
+    pane.id = 'pane-proj-' + p.id;
+    pane.innerHTML = `
+      <div class="proj-detail-wrap">
+        <button class="back-btn" onclick="backToProjects()">← back to projects/</button>
+        <div class="proj-badge">${p.icon || '📄'} ${p.badge || ''}</div>
+        <div class="proj-detail-title">${p.name}</div>
+        <div class="proj-detail-links">
+          ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="proj-live-btn">⚡ Live Demo ↗</a>` : ''}
+          ${p.ghUrl  ? `<a href="${p.ghUrl}"  target="_blank" class="proj-gh-btn">⌥ GitHub ↗</a>` : ''}
+        </div>
+        <div class="case-block problem"><div class="case-lbl">🔴 The Problem</div><div class="case-text">${p.problem || '—'}</div></div>
+        <div class="case-block stack"><div class="case-lbl">🟣 Tech Stack</div><div class="case-tech-grid">${(p.stackTags||[]).map(t=>`<span class="case-tech">${t}</span>`).join('')}</div></div>
+        <div class="case-block solution"><div class="case-lbl">🟢 My Solution</div><div class="case-text">${p.solution || '—'}</div></div>
+        <div class="case-block outcome"><div class="case-lbl">🔵 Outcome</div><div class="case-text">${p.outcome || '—'}</div></div>
+      </div>
+    `;
+    container.appendChild(pane);
+  });
+}
+
+// ============================================================
+//  RENDER SIDEBAR PROJECT FILE ROWS
+// ============================================================
+function buildSidebarProjectFiles() {
+  const childrenEl = document.getElementById('children-projects');
+  childrenEl.innerHTML = '';
+  data.projects.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'file-row';
+    row.id = 'file-' + p.id;
+    row.onclick = () => openProject(p.id);
+    row.innerHTML = `<span class="file-row-icon">📄</span><span class="file-row-name">${slugify(p.name)}.proj</span>`;
+    childrenEl.appendChild(row);
+  });
+}
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+// ============================================================
+//  RENDER PROJECTS LIST PANE
+// ============================================================
+function buildProjectsListPane() {
+  const rows = document.getElementById('pane-projects-list-rows');
+  const countLabel = document.getElementById('proj-count-label');
+  rows.innerHTML = '';
+  countLabel.textContent = `${data.projects.length} file${data.projects.length!==1?'s':''}`;
+  data.projects.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'pf-row';
+    row.onclick = () => openProject(p.id);
+    row.innerHTML = `
+      <span class="pf-icon">${p.icon||'📄'}</span>
+      <div class="pf-body">
+        <div class="pf-name">${p.name}</div>
+        <div class="pf-meta">${slugify(p.name)}.proj · ${p.badge||''}</div>
+      </div>
+      <div class="pf-tags">${(p.stackTags||[]).slice(0,3).map(t=>`<span class="pf-tag">${t}</span>`).join('')}</div>
+      ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" class="proj-live-link" onclick="event.stopPropagation()">⚡ Live ↗</a>` : ''}
+      <span class="pf-arrow">↗</span>
+    `;
+    rows.appendChild(row);
+  });
+}
+
+// ============================================================
+//  EXPLORER NAVIGATION
+// ============================================================
+function setPath(txt) { document.getElementById('path-display').textContent = txt; }
+
+function showPane(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); currentPane = id; }
+}
+
+function clearFileActive() { document.querySelectorAll('.file-row').forEach(r=>r.classList.remove('active')); }
+function clearFolderActive() { document.querySelectorAll('.folder-row').forEach(r=>r.classList.remove('active')); }
+
+function toggleFolder(id) {
+  const children = document.getElementById('children-' + id);
+  const folderEl = document.getElementById('folder-' + id);
+  const icon     = document.getElementById('ficon-' + id);
+  const isOpen   = openFolders.has(id);
+  if (isOpen) {
+    openFolders.delete(id);
+    children.classList.remove('open');
+    folderEl.classList.remove('folder-open','active');
+    icon.textContent = '📁';
+    if (id === 'projects') { showPane('pane-welcome'); setPath('select a file to explore'); }
+  } else {
+    openFolders.add(id);
+    children.classList.add('open');
+    folderEl.classList.add('folder-open');
+    icon.textContent = '📂';
+    clearFolderActive(); folderEl.classList.add('active');
+    if (id === 'projects') { clearFileActive(); showPane('pane-projects-folder'); setPath('projects/'); }
+  }
+}
+
+const PARENT_MAP = { react:'frontend',typescript:'frontend',nodejs:'backend',restapi:'backend',solana:'web3s',rust:'web3s',pytorch:'ai',tensorflow:'ai' };
+
+function openSkill(skillId) {
+  clearFileActive(); clearFolderActive();
+  const fileEl = document.getElementById('file-'+skillId);
+  if(fileEl) fileEl.classList.add('active');
+  const parent = PARENT_MAP[skillId];
+  if(parent) { const pEl=document.getElementById('folder-'+parent); if(pEl) pEl.classList.add('active'); }
+  showPane('pane-skill-'+skillId);
+  setPath(`skills/${skillId}.skill`);
+}
+
+function openProject(projId) {
+  clearFileActive(); clearFolderActive();
+  const fileEl = document.getElementById('file-'+projId);
+  if(fileEl) fileEl.classList.add('active');
+  const pf = document.getElementById('folder-projects');
+  if(pf) pf.classList.add('active');
+  if(!openFolders.has('projects')) {
+    openFolders.add('projects');
+    document.getElementById('children-projects').classList.add('open');
+    pf.classList.add('folder-open');
+    document.getElementById('ficon-projects').textContent='📂';
+  }
+  showPane('pane-proj-'+projId);
+  setPath(`projects/${slugify(data.projects.find(p=>p.id===projId)?.name||projId)}.proj`);
+}
+
+function backToProjects() {
+  clearFileActive(); clearFolderActive();
+  const pf=document.getElementById('folder-projects');
+  if(pf) pf.classList.add('active');
+  showPane('pane-projects-folder');
+  setPath('projects/');
+}
+
+// ============================================================
+//  PASSWORD MODAL
+// ============================================================
+function openPasswordModal() {
+  document.getElementById('pw-modal').classList.add('show');
+  setTimeout(()=>document.getElementById('pw-input').focus(),100);
+}
+function closePasswordModal() {
+  document.getElementById('pw-modal').classList.remove('show');
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-err').textContent='';
+}
+function checkPassword() {
+  const val = document.getElementById('pw-input').value;
+  if(val === data.password) {
+    closePasswordModal();
+    openAdmin();
+  } else {
+    const inp = document.getElementById('pw-input');
+    inp.classList.add('error');
+    document.getElementById('pw-err').textContent='Incorrect password';
+    setTimeout(()=>inp.classList.remove('error'),400);
+    inp.value='';
+  }
+}
+
+// ============================================================
+//  ADMIN PANEL
+// ============================================================
+function openAdmin() {
+  document.getElementById('admin-panel').classList.add('show');
+  showAdmSection('projects');
+  initAdminProjectsList();
+  loadSettingsForm();
+}
+function closeAdmin() { document.getElementById('admin-panel').classList.remove('show'); }
+
+function showAdmSection(id) {
+  document.querySelectorAll('.adm-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.adm-nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('adm-'+id).classList.add('active');
+  document.getElementById('adm-nav-'+id).classList.add('active');
+}
+
+// -------- ADMIN: Projects List --------
+function initAdminProjectsList() {
+  const list = document.getElementById('adm-proj-list');
+  list.innerHTML = '';
+  data.projects.forEach((p,i) => {
+    const card = document.createElement('div');
+    card.className = 'adm-proj-card';
+    card.innerHTML = `
+      <div class="adm-proj-info">
+        <div class="adm-proj-name">${p.icon||'📄'} ${p.name}</div>
+        <div class="adm-proj-skill">${(p.skills||[]).join(', ')}</div>
+        <div class="adm-proj-meta">${p.liveUrl?'⚡ '+p.liveUrl : 'No live URL'} &nbsp;·&nbsp; ${p.ghUrl?'⌥ GitHub linked':'No GitHub'}</div>
+      </div>
+      <div class="adm-proj-actions">
+        <button class="adm-btn-edit" onclick="editProject('${p.id}')">Edit</button>
+        <button class="adm-btn-del" onclick="deleteProject('${p.id}')">Delete</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  cancelProjectForm();
+}
+
+// -------- ADMIN: Project Form --------
+function openProjectForm(editId) {
+  document.getElementById('proj-form').style.display='block';
+  document.getElementById('proj-form-title').textContent = editId ? 'Edit Project' : 'New Project';
+  document.getElementById('proj-edit-id').value = editId || '';
+  if (!editId) {
+    ['proj-name','proj-icon','proj-badge','proj-skills','proj-short-desc','proj-stack-tags','proj-problem','proj-solution','proj-outcome','proj-live-url','proj-gh-url'].forEach(id=>{ document.getElementById(id).value=''; });
+  }
+  document.getElementById('proj-form').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function editProject(id) {
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  openProjectForm(id);
+  document.getElementById('proj-name').value = p.name;
+  document.getElementById('proj-icon').value = p.icon||'';
+  document.getElementById('proj-badge').value = p.badge||'';
+  document.getElementById('proj-skills').value = (p.skills||[]).join(', ');
+  document.getElementById('proj-short-desc').value = p.shortDesc||'';
+  document.getElementById('proj-stack-tags').value = (p.stackTags||[]).join(', ');
+  document.getElementById('proj-problem').value = p.problem||'';
+  document.getElementById('proj-solution').value = p.solution||'';
+  document.getElementById('proj-outcome').value = p.outcome||'';
+  document.getElementById('proj-live-url').value = p.liveUrl||'';
+  document.getElementById('proj-gh-url').value = p.ghUrl||'';
+}
+
+function cancelProjectForm() { document.getElementById('proj-form').style.display='none'; }
+
+function saveProject() {
+  const name = document.getElementById('proj-name').value.trim();
+  if(!name){ alert('Project name is required.'); return; }
+
+  const editId = document.getElementById('proj-edit-id').value;
+  const id = editId || slugify(name) + '_' + Date.now().toString(36);
+
+  const proj = {
+    id,
+    name,
+    icon: document.getElementById('proj-icon').value.trim() || '📄',
+    badge: document.getElementById('proj-badge').value.trim(),
+    skills: document.getElementById('proj-skills').value.split(',').map(s=>s.trim()).filter(Boolean),
+    shortDesc: document.getElementById('proj-short-desc').value.trim(),
+    stackTags: document.getElementById('proj-stack-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+    problem: document.getElementById('proj-problem').value.trim(),
+    solution: document.getElementById('proj-solution').value.trim(),
+    outcome: document.getElementById('proj-outcome').value.trim(),
+    liveUrl: document.getElementById('proj-live-url').value.trim(),
+    ghUrl: document.getElementById('proj-gh-url').value.trim(),
+  };
+
+  if (editId) {
+    const idx = data.projects.findIndex(p=>p.id===editId);
+    if(idx>-1) data.projects[idx] = proj;
+  } else {
+    data.projects.push(proj);
+  }
+
+  saveData();
+  rebuildPortfolio();
+  initAdminProjectsList();
+  showToast('Project saved ✓');
+}
+
+function deleteProject(id) {
+  if(!confirm('Delete this project?')) return;
+  data.projects = data.projects.filter(p=>p.id!==id);
+  saveData();
+  rebuildPortfolio();
+  initAdminProjectsList();
+  showToast('Project deleted');
+}
+
+// -------- ADMIN: Skills List --------
+function initAdminSkillsList() {
+  const list = document.getElementById('adm-skills-list');
+  list.innerHTML = '';
+  Object.entries(SKILL_DEFS).forEach(([id, def]) => {
+    const overrides = data.skills[id] || {};
+    const desc = overrides.desc || def.desc;
+    const tags = (overrides.tags || def.tags).join(', ');
+    const block = document.createElement('div');
+    block.style.cssText='margin-bottom:20px;background:#0a0a14;border:1px solid var(--border);padding:22px;';
+    block.innerHTML=`
+      <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:14px;">${def.icon} ${def.name}</div>
+      <div class="form-row">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="skill-desc-${id}" style="min-height:64px">${desc}</textarea>
+      </div>
+      <div class="form-row" style="margin-bottom:0">
+        <label class="form-label">Tags (comma separated)</label>
+        <input class="form-input" id="skill-tags-${id}" value="${tags}">
+      </div>
+      <div style="margin-top:12px;">
+        <button class="form-save" onclick="saveSkill('${id}')" style="font-size:10px;padding:7px 18px;">Save Skill</button>
+      </div>
+    `;
+    list.appendChild(block);
+  });
+}
+
+function saveSkill(id) {
+  data.skills[id] = {
+    desc: document.getElementById('skill-desc-'+id).value.trim(),
+    tags: document.getElementById('skill-tags-'+id).value.split(',').map(s=>s.trim()).filter(Boolean),
+  };
+  saveData();
+  rebuildPortfolio();
+  showToast(`${SKILL_DEFS[id].name} updated ✓`);
+}
+
+// -------- ADMIN: Settings --------
+function loadSettingsForm() {
+  document.getElementById('setting-name').value = data.name || '';
+  document.getElementById('setting-email').value = data.email || '';
+  document.getElementById('setting-github').value = data.github || '';
+  document.getElementById('new-password').value = '';
+}
+
+function saveSettings() {
+  const newPw = document.getElementById('new-password').value;
+  if(newPw) data.password = newPw;
+  data.name   = document.getElementById('setting-name').value.trim() || data.name;
+  data.email  = document.getElementById('setting-email').value.trim() || data.email;
+  data.github = document.getElementById('setting-github').value.trim() || data.github;
+  saveData();
+  applySettings();
+  showToast('Settings saved ✓');
+}
+
+// -------- REBUILD PORTFOLIO --------
+function rebuildPortfolio() {
+  buildSkillPanes();
+  buildProjectPanes();
+  buildSidebarProjectFiles();
+  buildProjectsListPane();
+  showPane('pane-welcome');
+  setPath('select a file to explore');
+  clearFileActive(); clearFolderActive();
+  openFolders.clear();
+  document.querySelectorAll('.folder-children').forEach(c=>c.classList.remove('open'));
+  document.querySelectorAll('.folder-row').forEach(r=>r.classList.remove('folder-open','active'));
+  document.querySelectorAll('.folder-row-icon').forEach(i=>{ if(i.textContent==='📂') i.textContent='📁'; });
+}
+
+// -------- TOAST --------
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '✓ ' + msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
